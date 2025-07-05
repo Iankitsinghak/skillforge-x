@@ -1,16 +1,34 @@
-import { Home, User, Star, MessageCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { Home, User, Trophy, Users } from 'lucide-react';
+
+const links = [
+  { to: '/', icon: <Home />, label: 'Home' },
+  { to: '/dashboard', icon: <Trophy />, label: 'Dashboard' },
+  { to: '/profile', icon: <User />, label: 'Profile' },
+  { to: '/challenges', icon: <Trophy />, label: 'Challenges' },
+  { to: '/collab', icon: <Users />, label: 'Collab' },
+];
 
 export default function Sidebar() {
+  const location = useLocation();
+
   return (
-    <div className="min-h-screen w-64 bg-[#111111] p-4 text-white shadow-xl">
-      <div className="text-2xl font-bold mb-10">SkillForge X</div>
+    <aside className="min-w-[220px] bg-zinc-900 text-white h-screen p-4">
+      <h2 className="text-xl font-bold mb-6">⚔️ SkillForge X</h2>
       <nav className="flex flex-col gap-4">
-        <Link to="/" className="hover:text-purple-500 flex items-center gap-2"><Home size={20}/> Dashboard</Link>
-        <Link to="/profile" className="hover:text-purple-500 flex items-center gap-2"><User size={20}/> Profile</Link>
-        <Link to="/challenges" className="hover:text-purple-500 flex items-center gap-2"><Star size={20}/> Challenges</Link>
-        <Link to="/collab" className="hover:text-purple-500 flex items-center gap-2"><MessageCircle size={20}/> Collab</Link>
+        {links.map((link) => (
+          <Link
+            key={link.to}
+            to={link.to}
+            className={`flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-zinc-700 transition ${
+              location.pathname === link.to ? 'bg-zinc-800' : ''
+            }`}
+          >
+            {link.icon}
+            <span>{link.label}</span>
+          </Link>
+        ))}
       </nav>
-    </div>
+    </aside>
   );
 }
