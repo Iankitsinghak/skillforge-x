@@ -1,16 +1,27 @@
-import Sidebar from "../layout/Sidebar";
+import React from 'react';
 
 export default function Dashboard() {
   return (
-    <div className="flex">
-      <Sidebar />
-      <div className="flex-1 bg-[#1a1a1a] p-8 text-white">
-        <h1 className="text-3xl font-bold mb-6">Welcome back, Captain 🧠</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-[#2a2a2a] p-6 rounded-2xl shadow-xl">Skill Matcher (AI here)</div>
-          <div className="bg-[#2a2a2a] p-6 rounded-2xl shadow-xl">Recommended Projects</div>
-          <div className="bg-[#2a2a2a] p-6 rounded-2xl shadow-xl">Weekly Challenge</div>
-          <div className="bg-[#2a2a2a] p-6 rounded-2xl shadow-xl">Collab Invites</div>
+    <div className="p-6 text-white">
+      <h1 className="text-3xl font-bold mb-4">📊 Dashboard</h1>
+      <p className="text-gray-300 mb-6">
+        Welcome back, dev warrior. Here’s your command center — track your XP, achievements, and ongoing quests.
+      </p>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="bg-zinc-800 p-6 rounded-2xl shadow hover:shadow-xl transition">
+          <h2 className="text-xl font-semibold mb-2">🔥 Total XP</h2>
+          <p className="text-2xl font-bold">1320</p>
+        </div>
+
+        <div className="bg-zinc-800 p-6 rounded-2xl shadow hover:shadow-xl transition">
+          <h2 className="text-xl font-semibold mb-2">🛠 Projects</h2>
+          <p className="text-2xl font-bold">4 Active</p>
+        </div>
+
+        <div className="bg-zinc-800 p-6 rounded-2xl shadow hover:shadow-xl transition">
+          <h2 className="text-xl font-semibold mb-2">🏆 Challenges</h2>
+          <p className="text-2xl font-bold">3 Completed</p>
         </div>
       </div>
     </div>
