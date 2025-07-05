@@ -1,27 +1,41 @@
-import Sidebar from "../layout/Sidebar";
+// ✅ FILE: client/src/pages/Collab.jsx
+import React from 'react';
+
+const teams = [
+  {
+    name: 'Team Phoenix',
+    desc: 'Looking for React + Node devs to join our startup-style project.',
+    members: 3,
+  },
+  {
+    name: 'Algo Ninjas',
+    desc: 'Crack DSA challenges weekly. Consistency + Learning = 🔥',
+    members: 5,
+  },
+  {
+    name: 'Open Source Buffs',
+    desc: 'Contribute to GitHub repos & help juniors get started.',
+    members: 4,
+  },
+];
 
 export default function Collab() {
   return (
-    <div className="flex">
-      <Sidebar />
-      <div className="flex-1 bg-[#1a1a1a] text-white p-8">
-        <h2 className="text-3xl font-bold mb-4">🤝 Collaborate with Devs</h2>
-        <div className="bg-[#2a2a2a] p-6 rounded-2xl shadow-xl max-w-3xl space-y-4">
-          <div className="bg-[#1f1f1f] p-4 rounded-xl flex justify-between items-center">
-            <div>
-              <p className="font-semibold">DevRider69</p>
-              <p className="text-sm text-gray-400">Looking for React dev to build a task tracker.</p>
-            </div>
-            <button className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-full text-sm font-semibold">Send Invite</button>
+    <div className="p-6 text-white">
+      <h1 className="text-3xl font-bold mb-4">🤝 Collaborate</h1>
+      <p className="text-gray-300 mb-6">
+        Find a squad. Build cool sh*t. Dominate hackathons. Let’s collab!
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {teams.map((team, i) => (
+          <div key={i} className="bg-zinc-800 p-5 rounded-xl hover:shadow-lg border border-zinc-700">
+            <h2 className="text-xl font-bold mb-1">{team.name}</h2>
+            <p className="text-gray-400 text-sm mb-3">{team.desc}</p>
+            <span className="text-sm bg-purple-600 px-3 py-1 rounded-full inline-block">
+              {team.members} Members
+            </span>
           </div>
-          <div className="bg-[#1f1f1f] p-4 rounded-xl flex justify-between items-center">
-            <div>
-              <p className="font-semibold">AIMaster404</p>
-              <p className="text-sm text-gray-400">Wants to collab on a Gemini AI idea.</p>
-            </div>
-            <button className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-full text-sm font-semibold">Send Invite</button>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );
