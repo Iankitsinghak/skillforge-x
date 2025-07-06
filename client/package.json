@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "lucide-react": "^0.314.0",        // ✅ ICONS for Sidebar etc.
+    "react-router-dom": "^6.23.0"      // ✅ Routing for pages
   },
   "devDependencies": {
     "vite": "^4.0.0",
