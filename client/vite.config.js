@@ -3,10 +3,10 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  root: '.', // ensures Vite reads from the client/ directory
+  root: '.', // root is client/
   plugins: [react()],
   build: {
-    outDir: 'dist', // output folder
+    outDir: 'dist',
     emptyOutDir: true,
   }
 });
