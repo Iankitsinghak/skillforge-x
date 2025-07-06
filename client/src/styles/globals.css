@@ -2,12 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 🌟 Custom overrides */
+/* 🌌 Custom Global Styles */
 body {
-  @apply bg-[#0f0f0f] text-white font-sans;
+  @apply bg-[#0f0f0f] text-white font-sans antialiased;
+  scroll-behavior: smooth;
+  line-height: 1.6;
 }
 
 /* 🔥 Smooth transitions */
 * {
   transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+}
+
+/* Optional scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #7e22ce;
+  border-radius: 10px;
 }
