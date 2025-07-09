@@ -1,22 +1,19 @@
 module.exports = {
   content: [
     "./index.html",
-    "./src/**/*.{js,jsx,ts,tsx}", 
+    "./src/**/*.{js,jsx,ts,tsx}",
   ],
-  darkMode: "class", 
+  darkMode: "class",
   theme: {
     extend: {
-      
       colors: {
-        primary: "#3B82F6", 
+        primary: "#3B82F6",
       },
     },
   },
-  plugins: [
-    require("@tailwindcss/forms"), 
-    require("@tailwindcss/typography"), 
-  ],
+  plugins: [],
   corePlugins: {
-    preflight: true, 
+    float: false,
+    clear: false,
   },
-}
+};
