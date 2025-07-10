@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
-
-const apiBase = import.meta.env.VITE_API_URL;
+import API from "../utils/api"; // ✅ USE THIS INSTEAD
 
 export default function Profile() {
   const [profile, setProfile] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`${apiBase}/api/users/profile/singhankit200000`)
-      .then((res) => res.json())
-      .then((data) => setProfile(data))
-      .catch((err) => console.error("Failed to fetch profile", err));
+    API.get("/users/profile/singhankit200000")
+      .then((res) => setProfile(res.data))
+      .catch((err) => {
+        console.error("Failed to fetch profile:", err);
+        setError("Failed to load profile.");
+      });
   }, []);
 
+  if (error) return <div className="text-red-400 p-6">{error}</div>;
   if (!profile) return <div className="text-white p-6">Loading...</div>;
 
   return (
