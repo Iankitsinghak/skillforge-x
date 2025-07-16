@@ -5,6 +5,8 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import PrivateRoute from './routes/PrivateRoute';
 import ProjectFeed from './pages/ProjectFeed';
+import JobFeed from './pages/JobFeed';
+import StartupJobs from './pages/StartupJobs';
 
 function App() {
   return (
@@ -32,6 +34,23 @@ function App() {
     </PrivateRoute>
   }
 />
+        <Route
+  path="/jobs"
+  element={
+    <PrivateRoute>
+      <JobFeed />
+    </PrivateRoute>
+  }
+/>
+<Route
+  path="/jobs/startups"
+  element={
+    <PrivateRoute>
+      <StartupJobs />
+    </PrivateRoute>
+  }
+/>
+        
       </Routes>
     </Router>
   );
