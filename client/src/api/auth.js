@@ -17,3 +17,10 @@ export const loginUser = async (userData) => {
   });
   return res.json();
 };
+export const getProfile = async () => {
+  const token = localStorage.getItem('token');
+  const res = await fetch(`${API}/api/user/profile`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.json();
+};
