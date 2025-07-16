@@ -11,6 +11,7 @@ import Challenges from './pages/Challenges';
 import ChallengeDetail from './pages/ChallengeDetail';
 import PostChallenge from './pages/PostChallenge';
 import PostJob from './pages/PostJob';
+import AskAI from './pages/AskAI';
 
 function App() {
   return (
@@ -83,6 +84,14 @@ function App() {
   element={
     <PrivateRoute>
       <PostJob />
+    </PrivateRoute>
+  }
+/>
+        <Route
+  path="/ask"
+  element={
+    <PrivateRoute>
+      <AskAI />
     </PrivateRoute>
   }
 />
