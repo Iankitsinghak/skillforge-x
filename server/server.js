@@ -24,3 +24,4 @@ app.use('/api/projects', require('./routes/projectRoutes'));
 app.use('/api/jobs', require('./routes/jobRoutes'));
 app.use('/api/challenges', require('./routes/challengeRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
+app.use('/api/ask', require('./routes/geminiRoutes'));
