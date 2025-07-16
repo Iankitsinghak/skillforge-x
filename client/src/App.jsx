@@ -10,6 +10,7 @@ import StartupJobs from './pages/StartupJobs';
 import Challenges from './pages/Challenges';
 import ChallengeDetail from './pages/ChallengeDetail';
 import PostChallenge from './pages/PostChallenge';
+import PostJob from './pages/PostJob';
 
 function App() {
   return (
@@ -74,6 +75,14 @@ function App() {
   element={
     <PrivateRoute>
       <PostChallenge />
+    </PrivateRoute>
+  }
+/>
+        <Route
+  path="/admin/jobs"
+  element={
+    <PrivateRoute>
+      <PostJob />
     </PrivateRoute>
   }
 />
