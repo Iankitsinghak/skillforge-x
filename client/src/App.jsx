@@ -4,6 +4,7 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import PrivateRoute from './routes/PrivateRoute';
+import ProjectFeed from './pages/ProjectFeed';
 
 function App() {
   return (
@@ -23,6 +24,14 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route
+  path="/projects"
+  element={
+    <PrivateRoute>
+      <ProjectFeed />
+    </PrivateRoute>
+  }
+/>
       </Routes>
     </Router>
   );
