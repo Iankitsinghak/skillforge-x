@@ -9,6 +9,7 @@ import JobFeed from './pages/JobFeed';
 import StartupJobs from './pages/StartupJobs';
 import Challenges from './pages/Challenges';
 import ChallengeDetail from './pages/ChallengeDetail';
+import PostChallenge from './pages/PostChallenge';
 
 function App() {
   return (
@@ -67,7 +68,15 @@ function App() {
       <ChallengeDetail />
     </PrivateRoute>
   }
-/>  
+/>
+        <Route
+  path="/admin/challenges"
+  element={
+    <PrivateRoute>
+      <PostChallenge />
+    </PrivateRoute>
+  }
+/>
       </Routes>
     </Router>
   );
