@@ -7,6 +7,8 @@ import PrivateRoute from './routes/PrivateRoute';
 import ProjectFeed from './pages/ProjectFeed';
 import JobFeed from './pages/JobFeed';
 import StartupJobs from './pages/StartupJobs';
+import Challenges from './pages/Challenges';
+import ChallengeDetail from './pages/ChallengeDetail';
 
 function App() {
   return (
@@ -50,7 +52,22 @@ function App() {
     </PrivateRoute>
   }
 />
-        
+      <Route
+  path="/challenges"
+  element={
+    <PrivateRoute>
+      <Challenges />
+    </PrivateRoute>
+  }
+/>
+<Route
+  path="/challenges/:id"
+  element={
+    <PrivateRoute>
+      <ChallengeDetail />
+    </PrivateRoute>
+  }
+/>  
       </Routes>
     </Router>
   );
