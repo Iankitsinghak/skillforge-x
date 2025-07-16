@@ -9,9 +9,12 @@ function App() {
   return (
     <Router>
       <Routes>
+        {/* Public Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+
+        {/* Protected Route */}
         <Route
           path="/dashboard"
           element={
