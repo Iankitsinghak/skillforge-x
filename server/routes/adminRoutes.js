@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { postChallenge } = require('../controllers/adminController');
 const protect = require('../middleware/authMiddleware'); // basic JWT protect
+const { postJob } = require('../controllers/adminController');
+
+router.post('/jobs', protect, postJob);
 
 router.post('/challenges', protect, postChallenge);
 
