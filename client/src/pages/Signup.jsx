@@ -15,17 +15,22 @@ const SignUp = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setMessage('');
-    try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/signup`, form);
-      setMessage('🎉 Account Created Successfully!');
-      setForm({ username: '', email: '', password: '', skills: '' });
-    } catch (err) {
-      setMessage('❌ Signup Failed. Try again.');
+  // Signup.jsx me handleSubmit function ke andar
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/signup`, form);
+    if (res.data.token) {
+      localStorage.setItem('token', res.data.token);
+      navigate('/dashboard');  // useNavigate ka hook already import karo
+    } else {
+      setMessage('Signup failed');
     }
-  };
+  } catch {
+    setMessage('Signup failed');
+  }
+};
 
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center px-4">
