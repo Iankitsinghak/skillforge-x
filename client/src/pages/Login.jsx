@@ -11,21 +11,22 @@ const Login = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    try {
-      const res = await loginUser(formData);
-      if (res.token) {
-        localStorage.setItem('token', res.token);
-        navigate('/dashboard');
-      } else {
-        setError(res.msg || 'Login failed');
-      }
-    } catch (err) {
-      setError('Something went wrong.');
+  // Login.jsx me handleSubmit function ke andar
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const res = await loginUser(formData);
+    if (res.token) {  // agar loginUser function already res.data return karta hai
+      localStorage.setItem('token', res.token);
+      navigate('/dashboard');
+    } else {
+      setError(res.msg || 'Login failed');
     }
-  };
+  } catch {
+    setError('Something went wrong.');
+  }
+};
 
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center px-4">
