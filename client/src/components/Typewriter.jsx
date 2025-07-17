@@ -1,3 +1,4 @@
+// src/components/Typewriter.jsx
 import { useState, useEffect } from 'react';
 
 const Typewriter = ({ texts = [], speed = 100, delay = 2000 }) => {
@@ -11,20 +12,25 @@ const Typewriter = ({ texts = [], speed = 100, delay = 2000 }) => {
     if (charIndex < currentText.length) {
       const timeout = setTimeout(() => {
         setDisplayed((prev) => prev + currentText[charIndex]);
-        setCharIndex(charIndex + 1);
+        setCharIndex((prev) => prev + 1);
       }, speed);
       return () => clearTimeout(timeout);
     } else {
       const timeout = setTimeout(() => {
         setDisplayed('');
         setCharIndex(0);
-        setTextIndex((textIndex + 1) % texts.length);
+        setTextIndex((prev) => (prev + 1) % texts.length);
       }, delay);
       return () => clearTimeout(timeout);
     }
   }, [charIndex, textIndex, texts, speed, delay]);
 
-  return <span>{displayed}_</span>;
+  return (
+    <span className="font-mono text-purple-300">
+      {displayed}
+      <span className="animate-pulse">|</span>
+    </span>
+  );
 };
 
 export default Typewriter;
