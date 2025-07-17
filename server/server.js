@@ -15,13 +15,13 @@ connectDB();
 
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
-
-app.get('/', (req, res) => res.send('SkillForge X API is running'));
-
-const PORT = process.env.PORT || 5000;
 app.use('/api/projects', require('./routes/projectRoutes'));
 app.use('/api/jobs', require('./routes/jobRoutes'));
 app.use('/api/challenges', require('./routes/challengeRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
 app.use('/api/ask', require('./routes/geminiRoutes'));
+
+app.get('/', (req, res) => res.send('SkillForge X API is running'));
+
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
