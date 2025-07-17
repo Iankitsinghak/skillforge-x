@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { signupUser } from '../api/auth';
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     username: '',
     email: '',
@@ -15,27 +17,17 @@ const SignUp = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // Signup.jsx me handleSubmit function ke andar
-
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const payload = {
-      ...form,
-      skills: form.skills.split(',').map(skill => skill.trim()), // FIXED
-    };
-    const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/signup`, payload);
-    if (res.data.token) {
-      localStorage.setItem('token', res.data.token);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setMessage('');
+    const res = await signupUser(form);
+    if (res.token) {
+      localStorage.setItem('token', res.token);
       navigate('/dashboard');
     } else {
-      setMessage('Signup failed');
+      setMessage(res.msg || 'Signup failed');
     }
-  } catch {
-    setMessage('Signup failed');
-  }
-};
-
+  };
 
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center px-4">
