@@ -1,5 +1,5 @@
 // src/pages/LandingPage.jsx
-import { Typewriter } from 'react-simple-typewriter';
+import Typewriter from '../components/Typewriter';
 import { useNavigate } from 'react-router-dom';
 
 const LandingPage = () => {
