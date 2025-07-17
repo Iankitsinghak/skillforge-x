@@ -1,47 +1,93 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { signupUser } from '../api/auth';
+import axios from 'axios';
 
-const Signup = () => {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
+const SignUp = () => {
+  const [form, setForm] = useState({
     username: '',
     email: '',
     password: '',
     skills: '',
   });
-  const [error, setError] = useState('');
+
+  const [message, setMessage] = useState('');
 
   const handleChange = (e) => {
-    setFormData({...formData, [e.target.name]: e.target.value});
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const skillsArray = formData.skills.split(',').map(skill => skill.trim());
-    const res = await signupUser({ ...formData, skills: skillsArray });
-
-    if (res.token) {
-      localStorage.setItem('token', res.token);
-      navigate('/dashboard');
-    } else {
-      setError(res.msg || 'Signup failed');
+    setMessage('');
+    try {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/signup`, form);
+      setMessage('🎉 Account Created Successfully!');
+      setForm({ username: '', email: '', password: '', skills: '' });
+    } catch (err) {
+      setMessage('❌ Signup Failed. Try again.');
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black text-white">
-      <form onSubmit={handleSubmit} className="bg-gray-900 p-8 rounded-xl w-[90%] max-w-md space-y-4">
-        <h2 className="text-2xl font-bold text-center">Sign Up</h2>
-        {error && <p className="text-red-500 text-sm">{error}</p>}
-        <input className="input" name="username" placeholder="Username" onChange={handleChange} required />
-        <input className="input" type="email" name="email" placeholder="Email" onChange={handleChange} required />
-        <input className="input" type="password" name="password" placeholder="Password" onChange={handleChange} required />
-        <input className="input" name="skills" placeholder="Skills (comma-separated)" onChange={handleChange} />
-        <button type="submit" className="w-full bg-purple-600 hover:bg-purple-700 py-2 rounded">Create Account</button>
+    <div className="min-h-screen bg-black text-white flex items-center justify-center px-4">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-[#0f172a] p-10 rounded-2xl shadow-2xl w-full max-w-md"
+      >
+        <h2 className="text-3xl font-bold text-center mb-8">Create an Account</h2>
+
+        <input
+          type="text"
+          name="username"
+          value={form.username}
+          onChange={handleChange}
+          placeholder="Username"
+          className="w-full mb-4 p-3 rounded-md bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          required
+        />
+
+        <input
+          type="email"
+          name="email"
+          value={form.email}
+          onChange={handleChange}
+          placeholder="Email"
+          className="w-full mb-4 p-3 rounded-md bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          required
+        />
+
+        <input
+          type="password"
+          name="password"
+          value={form.password}
+          onChange={handleChange}
+          placeholder="Password"
+          className="w-full mb-4 p-3 rounded-md bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          required
+        />
+
+        <input
+          type="text"
+          name="skills"
+          value={form.skills}
+          onChange={handleChange}
+          placeholder="Skills (comma separated)"
+          className="w-full mb-6 p-3 rounded-md bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          required
+        />
+
+        <button
+          type="submit"
+          className="w-full bg-purple-600 hover:bg-purple-800 transition duration-300 py-3 rounded-lg font-semibold"
+        >
+          Create Account
+        </button>
+
+        {message && (
+          <p className="text-center mt-4 text-sm text-red-400">{message}</p>
+        )}
       </form>
     </div>
   );
 };
 
-export default Signup;
+export default SignUp;
