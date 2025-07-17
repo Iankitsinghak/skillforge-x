@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
+import LandingPage from './pages/LandingPage'; // 👈 import landing page
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
@@ -17,14 +17,14 @@ import Navbar from './components/Navbar';
 function App() {
   return (
     <Router>
-      <Navbar /> {/* 👈 Navbar always visible */}
+      <Navbar />
       <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<Home />} />
+        {/* 👇 Public landing page */}
+        <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
 
-        {/* Protected Routes */}
+        {/* 👇 Private routes */}
         <Route
           path="/dashboard"
           element={
