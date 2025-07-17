@@ -12,17 +12,19 @@ import ChallengeDetail from './pages/ChallengeDetail';
 import PostChallenge from './pages/PostChallenge';
 import PostJob from './pages/PostJob';
 import AskAI from './pages/AskAI';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
     <Router>
+      <Navbar /> {/* 👈 Navbar always visible */}
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
 
-        {/* Protected Route */}
+        {/* Protected Routes */}
         <Route
           path="/dashboard"
           element={
@@ -32,69 +34,69 @@ function App() {
           }
         />
         <Route
-  path="/projects"
-  element={
-    <PrivateRoute>
-      <ProjectFeed />
-    </PrivateRoute>
-  }
-/>
+          path="/projects"
+          element={
+            <PrivateRoute>
+              <ProjectFeed />
+            </PrivateRoute>
+          }
+        />
         <Route
-  path="/jobs"
-  element={
-    <PrivateRoute>
-      <JobFeed />
-    </PrivateRoute>
-  }
-/>
-<Route
-  path="/jobs/startups"
-  element={
-    <PrivateRoute>
-      <StartupJobs />
-    </PrivateRoute>
-  }
-/>
-      <Route
-  path="/challenges"
-  element={
-    <PrivateRoute>
-      <Challenges />
-    </PrivateRoute>
-  }
-/>
-<Route
-  path="/challenges/:id"
-  element={
-    <PrivateRoute>
-      <ChallengeDetail />
-    </PrivateRoute>
-  }
-/>
+          path="/jobs"
+          element={
+            <PrivateRoute>
+              <JobFeed />
+            </PrivateRoute>
+          }
+        />
         <Route
-  path="/admin/challenges"
-  element={
-    <PrivateRoute>
-      <PostChallenge />
-    </PrivateRoute>
-  }
-/>
+          path="/jobs/startups"
+          element={
+            <PrivateRoute>
+              <StartupJobs />
+            </PrivateRoute>
+          }
+        />
         <Route
-  path="/admin/jobs"
-  element={
-    <PrivateRoute>
-      <PostJob />
-    </PrivateRoute>
-  }
-/>
+          path="/challenges"
+          element={
+            <PrivateRoute>
+              <Challenges />
+            </PrivateRoute>
+          }
+        />
         <Route
-  path="/ask"
-  element={
-    <PrivateRoute>
-      <AskAI />
-    </PrivateRoute>
-  }
-/>
+          path="/challenges/:id"
+          element={
+            <PrivateRoute>
+              <ChallengeDetail />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin/challenges"
+          element={
+            <PrivateRoute>
+              <PostChallenge />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin/jobs"
+          element={
+            <PrivateRoute>
+              <PostJob />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/ask"
+          element={
+            <PrivateRoute>
+              <AskAI />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </Router>
   );
