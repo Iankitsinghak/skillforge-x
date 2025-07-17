@@ -1,56 +1,95 @@
+import { useEffect, useState } from 'react';
+import { getProfile } from '../api/auth';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import Typewriter from '../components/Typewriter';
 
-const Home = () => {
+const Dashboard = () => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const data = await getProfile();
+      setUser(data.user || null);
+    };
+    fetchProfile();
+  }, []);
+
+  if (!user) {
+    return (
+      <div className="min-h-screen flex justify-center items-center bg-black text-white">
+        <p className="text-xl animate-pulse">Loading profile...</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center px-6">
-      <motion.h1
-        className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-center"
-        initial={{ opacity: 0, y: -40 }}
+    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-950 text-white px-6 py-10">
+      {/* Animated Welcome */}
+      <motion.h2
+        className="text-4xl font-bold mb-6 text-center"
+        initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 0.7 }}
       >
-        <span className="text-purple-500">SkillForge X</span>
-      </motion.h1>
+        Welcome, {user.username} 👋
+      </motion.h2>
 
+      {/* User Info Card */}
       <motion.div
-        className="mt-6 text-xl sm:text-2xl text-center max-w-xl h-[80px]"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.8, duration: 0.8 }}
+        className="bg-[#111827] border border-gray-700 rounded-2xl p-6 shadow-xl max-w-xl mx-auto mb-10"
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2, duration: 0.6 }}
       >
-        <Typewriter
-          texts={[
-            'Build. Collaborate. Conquer.',
-            'Your skills deserve real challenges.',
-            "Not another tutorial site — this one's real.",
-            'Post. Collab. Get Hired.',
-          ]}
-          speed={50}
-          delay={2000}
-        />
+        <p className="text-lg mb-2">📧 <span className="text-gray-300">{user.email}</span></p>
+        <p className="text-lg">🧠 Skills:</p>
+        <div className="flex flex-wrap mt-2 gap-2">
+          {user.skills && user.skills.length > 0 ? (
+            user.skills.map((skill, idx) => (
+              <span
+                key={idx}
+                className="px-3 py-1 rounded-full bg-purple-700 text-sm font-medium shadow-sm"
+              >
+                {skill}
+              </span>
+            ))
+          ) : (
+            <span className="text-gray-400">No skills added</span>
+          )}
+        </div>
       </motion.div>
 
+      {/* Quick Action Cards */}
       <motion.div
-        className="mt-10 flex gap-6"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.6, duration: 0.8 }}
+        className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto"
+        initial="hidden"
+        animate="visible"
+        variants={{
+          visible: { transition: { staggerChildren: 0.15 } },
+        }}
       >
-        <Link to="/signup">
-          <button className="bg-purple-600 hover:bg-purple-800 px-6 py-3 rounded-xl text-lg font-semibold">
-            Get Started
-          </button>
-        </Link>
-        <Link to="/projects">
-          <button className="border border-purple-500 hover:bg-purple-900 px-6 py-3 rounded-xl text-lg font-semibold">
-            Explore Projects
-          </button>
-        </Link>
+        {[
+          { icon: '🚀', title: 'Explore Projects', link: '/projects' },
+          { icon: '🎯', title: 'Join Challenges', link: '/challenges' },
+          { icon: '🤖', title: 'Ask AI', link: '/ask' },
+          { icon: '💼', title: 'Skill-Matched Jobs', link: '/jobs' },
+        ].map((item, i) => (
+          <motion.a
+            key={i}
+            href={item.link}
+            className="bg-[#1f2937] hover:bg-[#2a374b] border border-gray-700 rounded-xl p-6 flex flex-col items-start shadow-lg transition duration-300 hover:shadow-2xl"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.97 }}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: i * 0.2 }}
+          >
+            <div className="text-3xl mb-2">{item.icon}</div>
+            <h3 className="text-xl font-semibold">{item.title}</h3>
+          </motion.a>
+        ))}
       </motion.div>
     </div>
   );
 };
 
-export default Home;
+export default Dashboard;
