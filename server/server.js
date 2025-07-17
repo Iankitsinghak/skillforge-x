@@ -20,6 +20,7 @@ app.use('/api/jobs', require('./routes/jobRoutes'));
 app.use('/api/challenges', require('./routes/challengeRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
 app.use('/api/ask', require('./routes/geminiRoutes'));
+app.use('/api/user', require('./routes/userRoutes'));
 
 app.get('/', (req, res) => res.send('SkillForge X API is running'));
 
