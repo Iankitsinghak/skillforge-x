@@ -1,95 +1,104 @@
-import { useEffect, useState } from 'react';
-import { getProfile } from '../api/auth';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Typewriter } from 'react-simple-typewriter';
 
-const Dashboard = () => {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-      const data = await getProfile();
-      setUser(data.user || null);
-    };
-    fetchProfile();
-  }, []);
-
-  if (!user) {
-    return (
-      <div className="min-h-screen flex justify-center items-center bg-black text-white">
-        <p className="text-xl animate-pulse">Loading profile...</p>
-      </div>
-    );
-  }
-
+const Home = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-950 text-white px-6 py-10">
-      {/* Animated Welcome */}
-      <motion.h2
-        className="text-4xl font-bold mb-6 text-center"
+    <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center px-6 py-10">
+      {/* HERO SECTION */}
+      <motion.div
+        className="text-center max-w-3xl"
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
       >
-        Welcome, {user.username} 👋
-      </motion.h2>
+        <h1 className="text-4xl sm:text-5xl font-extrabold mb-4">
+          Welcome to <span className="text-purple-500">SkillForge X</span>
+        </h1>
+        <p className="text-xl mb-6 text-gray-300">
+          The best platform for{' '}
+          <span className="text-purple-400 font-bold">
+            <Typewriter
+              words={['team collaboration', 'real-world challenges', 'startup jobs', 'AI-based learning']}
+              loop={true}
+              cursor
+              cursorStyle="|"
+              typeSpeed={80}
+              deleteSpeed={60}
+              delaySpeed={1500}
+            />
+          </span>
+        </p>
 
-      {/* User Info Card */}
-      <motion.div
-        className="bg-[#111827] border border-gray-700 rounded-2xl p-6 shadow-xl max-w-xl mx-auto mb-10"
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2, duration: 0.6 }}
-      >
-        <p className="text-lg mb-2">📧 <span className="text-gray-300">{user.email}</span></p>
-        <p className="text-lg">🧠 Skills:</p>
-        <div className="flex flex-wrap mt-2 gap-2">
-          {user.skills && user.skills.length > 0 ? (
-            user.skills.map((skill, idx) => (
-              <span
-                key={idx}
-                className="px-3 py-1 rounded-full bg-purple-700 text-sm font-medium shadow-sm"
-              >
-                {skill}
-              </span>
-            ))
-          ) : (
-            <span className="text-gray-400">No skills added</span>
-          )}
+        <div className="flex gap-4 justify-center">
+          <Link
+            to="/signup"
+            className="bg-purple-600 hover:bg-purple-800 transition duration-300 px-6 py-3 rounded-lg font-semibold"
+          >
+            Get Started
+          </Link>
+          <a
+            href="#features"
+            className="border border-purple-500 hover:bg-purple-700 transition duration-300 px-6 py-3 rounded-lg font-semibold"
+          >
+            Explore Features
+          </a>
         </div>
       </motion.div>
 
-      {/* Quick Action Cards */}
-      <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto"
-        initial="hidden"
-        animate="visible"
-        variants={{
-          visible: { transition: { staggerChildren: 0.15 } },
-        }}
-      >
-        {[
-          { icon: '🚀', title: 'Explore Projects', link: '/projects' },
-          { icon: '🎯', title: 'Join Challenges', link: '/challenges' },
-          { icon: '🤖', title: 'Ask AI', link: '/ask' },
-          { icon: '💼', title: 'Skill-Matched Jobs', link: '/jobs' },
-        ].map((item, i) => (
-          <motion.a
-            key={i}
-            href={item.link}
-            className="bg-[#1f2937] hover:bg-[#2a374b] border border-gray-700 rounded-xl p-6 flex flex-col items-start shadow-lg transition duration-300 hover:shadow-2xl"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.97 }}
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: i * 0.2 }}
-          >
-            <div className="text-3xl mb-2">{item.icon}</div>
-            <h3 className="text-xl font-semibold">{item.title}</h3>
-          </motion.a>
-        ))}
-      </motion.div>
+      {/* FEATURES SECTION */}
+      <div id="features" className="mt-20 max-w-5xl w-full">
+        <h2 className="text-3xl font-bold text-center mb-10">🔥 Features That Set Us Apart</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[
+            {
+              icon: '🤝',
+              title: 'AI Skill Match',
+              desc: 'Find the perfect project or job based on your real skills.',
+            },
+            {
+              icon: '🚀',
+              title: 'Team Collaboration',
+              desc: 'Instantly join teams and build amazing things together.',
+            },
+            {
+              icon: '🏆',
+              title: 'Weekly Challenges',
+              desc: 'Compete, learn and win every week with fun coding challenges.',
+            },
+            {
+              icon: '📂',
+              title: 'GitHub & Resume Integration',
+              desc: 'Auto-create portfolio entries directly from your activity.',
+            },
+            {
+              icon: '💼',
+              title: 'Skill-Based Job Feed',
+              desc: 'No more random jobs — get only what suits you.',
+            },
+            {
+              icon: '🧠',
+              title: 'AI Support',
+              desc: 'Ask questions, get help — your personal AI guide always available.',
+            },
+          ].map((f, idx) => (
+            <motion.div
+              key={idx}
+              className="bg-[#1f2937] p-6 rounded-xl border border-gray-700 shadow-md"
+              whileHover={{ scale: 1.05 }}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1, duration: 0.5 }}
+            >
+              <div className="text-3xl mb-3">{f.icon}</div>
+              <h3 className="text-xl font-bold mb-2">{f.title}</h3>
+              <p className="text-gray-400">{f.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default Home;
