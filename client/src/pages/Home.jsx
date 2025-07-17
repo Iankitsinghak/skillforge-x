@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
-import { Typewriter } from 'react-simple-typewriter';
 import { Link } from 'react-router-dom';
+import Typewriter from '../components/Typewriter';
 
 const Home = () => {
   return (
@@ -15,24 +15,20 @@ const Home = () => {
       </motion.h1>
 
       <motion.div
-        className="mt-6 text-xl sm:text-2xl text-center max-w-xl"
+        className="mt-6 text-xl sm:text-2xl text-center max-w-xl h-[80px]"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8, duration: 0.8 }}
       >
         <Typewriter
-          words={[
+          texts={[
             'Build. Collaborate. Conquer.',
             'Your skills deserve real challenges.',
             "Not another tutorial site — this one's real.",
             'Post. Collab. Get Hired.',
           ]}
-          loop
-          cursor
-          cursorStyle="_"
-          typeSpeed={50}
-          deleteSpeed={30}
-          delaySpeed={2000}
+          speed={50}
+          delay={2000}
         />
       </motion.div>
 
