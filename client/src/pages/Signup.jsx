@@ -20,10 +20,14 @@ const SignUp = () => {
 const handleSubmit = async (e) => {
   e.preventDefault();
   try {
-    const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/signup`, form);
+    const payload = {
+      ...form,
+      skills: form.skills.split(',').map(skill => skill.trim()), // FIXED
+    };
+    const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/signup`, payload);
     if (res.data.token) {
       localStorage.setItem('token', res.data.token);
-      navigate('/dashboard');  // useNavigate ka hook already import karo
+      navigate('/dashboard');
     } else {
       setMessage('Signup failed');
     }
@@ -31,6 +35,7 @@ const handleSubmit = async (e) => {
     setMessage('Signup failed');
   }
 };
+
 
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center px-4">
