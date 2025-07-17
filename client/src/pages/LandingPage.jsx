@@ -13,18 +13,14 @@ const LandingPage = () => {
 
       <h2 className="text-xl md:text-2xl text-gray-300 text-center mb-10">
         <Typewriter
-          words={[
+          texts={[
             'Best platform for team collab',
             'Join real dev challenges',
             'Auto-matched jobs & projects',
             'Build your dream tech profile',
           ]}
-          loop={true}
-          cursor
-          cursorStyle="|"
-          typeSpeed={60}
-          deleteSpeed={40}
-          delaySpeed={1500}
+          speed={60}
+          delay={1500}
         />
       </h2>
 
