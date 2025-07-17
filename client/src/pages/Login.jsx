@@ -11,22 +11,23 @@ const Login = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Login.jsx me handleSubmit function ke andar
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const res = await loginUser(formData);
-    if (res.token) {  // agar loginUser function already res.data return karta hai
-      localStorage.setItem('token', res.token);
-      navigate('/dashboard');
-    } else {
-      setError(res.msg || 'Login failed');
+    try {
+      const res = await loginUser(formData);  // ✅ Hitting backend
+      if (res.token) {
+        localStorage.setItem('token', res.token);  // ✅ Store token
+        navigate('/dashboard');  // ✅ Redirect to dashboard
+      } else {
+        setError(res.msg || '❌ Login failed');
+      }
+    } catch (err) {
+      console.error('Login Error:', err);
+      setError('❌ Something went wrong. Check your email and password.');
     }
-  } catch {
-    setError('Something went wrong.');
-  }
-};
+  };
 
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center px-4">
