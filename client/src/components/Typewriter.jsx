@@ -1,19 +1,30 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
-const Typewriter = ({ text, speed = 100 }) => {
-  const [displayed, setDisplayed] = useState("");
+const Typewriter = ({ texts = [], speed = 100, delay = 2000 }) => {
+  const [textIndex, setTextIndex] = useState(0);
+  const [displayed, setDisplayed] = useState('');
+  const [charIndex, setCharIndex] = useState(0);
 
   useEffect(() => {
-    let index = 0;
-    const interval = setInterval(() => {
-      setDisplayed((prev) => prev + text.charAt(index));
-      index++;
-      if (index >= text.length) clearInterval(interval);
-    }, speed);
-    return () => clearInterval(interval);
-  }, [text, speed]);
+    const currentText = texts[textIndex];
 
-  return <span>{displayed}</span>;
+    if (charIndex < currentText.length) {
+      const timeout = setTimeout(() => {
+        setDisplayed((prev) => prev + currentText[charIndex]);
+        setCharIndex(charIndex + 1);
+      }, speed);
+      return () => clearTimeout(timeout);
+    } else {
+      const timeout = setTimeout(() => {
+        setDisplayed('');
+        setCharIndex(0);
+        setTextIndex((textIndex + 1) % texts.length);
+      }, delay);
+      return () => clearTimeout(timeout);
+    }
+  }, [charIndex, textIndex, texts, speed, delay]);
+
+  return <span>{displayed}_</span>;
 };
 
 export default Typewriter;
