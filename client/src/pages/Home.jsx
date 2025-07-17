@@ -23,7 +23,7 @@ const Home = () => {
           cursorStyle="|"
           typeSpeed={60}
           deleteSpeed={40}
-          delaySpeed={1500}
+          delaySpeed={500}
         />
       </h2>
 
