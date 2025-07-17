@@ -1,15 +1,11 @@
 {
-  "projects": [
+  "rewrites": [
     {
-      "src": "client",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ],
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "framework": "vite",
   "rootDirectory": "client"
 }
