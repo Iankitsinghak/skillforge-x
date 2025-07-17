@@ -14,18 +14,13 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    const res = await loginUser(formData);
 
-    try {
-      const res = await loginUser(formData);  // ✅ Hitting backend
-      if (res.token) {
-        localStorage.setItem('token', res.token);  // ✅ Store token
-        navigate('/dashboard');  // ✅ Redirect to dashboard
-      } else {
-        setError(res.msg || '❌ Login failed');
-      }
-    } catch (err) {
-      console.error('Login Error:', err);
-      setError('❌ Something went wrong. Check your email and password.');
+    if (res.token) {
+      localStorage.setItem('token', res.token);
+      navigate('/dashboard');
+    } else {
+      setError(res.msg || 'Login failed');
     }
   };
 
