@@ -12,7 +12,7 @@ const AskAI = () => {
     setAnswer('');
 
     try {
-      const res = await fetch('https://<your-backend-url>/api/gemini/ask', {
+      const res = await fetch('https://skillforge-x-1.onrender.com/api/gemini/ask', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
