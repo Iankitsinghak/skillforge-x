@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getMatchedProjects } from '../api/projects';
+import axios from 'axios';
 
 const ProjectFeed = () => {
   const [projects, setProjects] = useState([]);
@@ -11,6 +12,23 @@ const ProjectFeed = () => {
     };
     fetchData();
   }, []);
+
+  const handleJoin = async (projectId) => {
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/projects/join`,
+        { projectId },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        }
+      );
+      alert('Join request sent to admin!');
+    } catch (err) {
+      alert('Failed to join project');
+    }
+  };
 
   return (
     <div className="min-h-screen bg-black text-white px-6 py-10">
@@ -28,6 +46,12 @@ const ProjectFeed = () => {
                 🔧 Skills: {project.skillsRequired.join(', ')}
               </p>
               <p className="mt-1 text-sm text-gray-500">👤 Created By: {project.createdBy}</p>
+              <button
+                onClick={() => handleJoin(project._id)}
+                className="mt-3 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded"
+              >
+                Save + Join Now
+              </button>
             </div>
           ))}
         </div>
