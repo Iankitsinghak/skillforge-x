@@ -1,12 +1,30 @@
 import { useEffect, useState } from 'react';
 import { getMatchedJobs } from '../api/jobs';
+import axios from 'axios';
 
 const JobFeed = () => {
   const [jobs, setJobs] = useState([]);
 
   useEffect(() => {
-    getMatchedJobs().then(data => setJobs(data));
+    getMatchedJobs().then(data => setJobs(data || []));
   }, []);
+
+  const handleApply = async (jobId) => {
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/jobs/apply`,
+        { jobId },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        }
+      );
+      alert('Application sent to admin!');
+    } catch (err) {
+      alert('Failed to apply to job');
+    }
+  };
 
   return (
     <div className="min-h-screen bg-black text-white px-6 py-10">
@@ -18,6 +36,12 @@ const JobFeed = () => {
             <p className="text-gray-400">{job.description}</p>
             <p className="mt-2 text-sm">🛠 Required: {job.requiredSkills.join(', ')}</p>
             <p className="text-sm text-gray-500">🏢 Company: {job.company}</p>
+            <button
+              onClick={() => handleApply(job._id)}
+              className="mt-3 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded"
+            >
+              Save + Apply Now
+            </button>
           </div>
         ))}
       </div>
