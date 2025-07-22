@@ -5,16 +5,20 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 exports.askGemini = async (req, res) => {
   try {
-    const { prompt } = req.body;
-    const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+    const { message } = req.body; // 👈 make sure frontend sends "message"
 
-    const result = await model.generateContent(prompt);
+    if (!message) {
+      return res.status(400).json({ error: 'No message provided' });
+    }
+
+    const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+    const result = await model.generateContent(message);
     const response = await result.response;
-    const text = response.text();
+    const text = await response.text(); // 👈 await this!
 
     res.json({ answer: text });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ msg: 'Gemini API failed' });
+    console.error('Gemini Error:', err.message);
+    res.status(500).json({ msg: 'Gemini API failed', error: err.message });
   }
 };
