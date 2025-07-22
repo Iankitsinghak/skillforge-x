@@ -31,6 +31,14 @@ function App() {
         <Route path="/dashboard" element={
           <PrivateRoute><Dashboard /></PrivateRoute>
         } />
+          <Route
+            path="/ask"
+            element={
+              <PrivateRoute>
+                <AskAI />
+              </PrivateRoute>
+            }
+          />
         <Route path="/projects" element={
           <PrivateRoute><ProjectFeed /></PrivateRoute>
         } />
