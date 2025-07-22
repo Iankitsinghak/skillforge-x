@@ -18,7 +18,7 @@ import LandingPage from './pages/LandingPage';
 function App() {
   return (
     <Router>
-      {/* ✅ Navbar should be outside Routes to be global */}
+      {/* ✅ Navbar is global */}
       <Navbar />
       <Routes>
         {/* Public Routes */}
@@ -31,14 +31,11 @@ function App() {
         <Route path="/dashboard" element={
           <PrivateRoute><Dashboard /></PrivateRoute>
         } />
-          <Route
-            path="/ask"
-            element={
-              <PrivateRoute>
-                <AskAI />
-              </PrivateRoute>
-            }
-          />
+        <Route path="/ask" element={
+          <PrivateRoute><AskAI /></PrivateRoute>
+        } />
+
+        {/* Project & Job Related */}
         <Route path="/projects" element={
           <PrivateRoute><ProjectFeed /></PrivateRoute>
         } />
@@ -48,6 +45,11 @@ function App() {
         <Route path="/jobs/startups" element={
           <PrivateRoute><StartupJobs /></PrivateRoute>
         } />
+        <Route path="/admin/jobs" element={
+          <PrivateRoute><PostJob /></PrivateRoute>
+        } />
+
+        {/* Challenge System */}
         <Route path="/challenges" element={
           <PrivateRoute><Challenges /></PrivateRoute>
         } />
@@ -56,12 +58,6 @@ function App() {
         } />
         <Route path="/admin/challenges" element={
           <PrivateRoute><PostChallenge /></PrivateRoute>
-        } />
-        <Route path="/admin/jobs" element={
-          <PrivateRoute><PostJob /></PrivateRoute>
-        } />
-        <Route path="/ask" element={
-          <PrivateRoute><AskAI /></PrivateRoute>
         } />
       </Routes>
     </Router>
