@@ -1,70 +1,65 @@
-// src/pages/AskAI.jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const AskAI = () => {
-  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+  const [answer, setAnswer] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const askBot = async () => {
+  const handleAsk = async () => {
     if (!input.trim()) return;
 
-    const userMsg = { sender: 'user', text: input };
-    setMessages((prev) => [...prev, userMsg]);
+    setLoading(true);
+    setAnswer('');
 
     try {
-      const res = await fetch('https://skillforge-x-1.onrender.com/api/chatbot/ask', {
+      const res = await fetch('https://<your-backend-url>/api/gemini/ask', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ prompt: input }),
+        body: JSON.stringify({ message: input }),
       });
 
       const data = await res.json();
-      const botMsg = { sender: 'bot', text: data.response || 'No response' };
-      setMessages((prev) => [...prev, botMsg]);
+      if (data.answer) {
+        setAnswer(data.answer);
+      } else {
+        setAnswer('⚠️ Gemini did not return a response.');
+      }
     } catch (err) {
-      setMessages((prev) => [
-        ...prev,
-        { sender: 'bot', text: 'Something went wrong with Gemini 🤖' },
-      ]);
+      console.error(err);
+      setAnswer('❌ Something went wrong while contacting Gemini!');
     }
 
-    setInput('');
+    setLoading(false);
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-6">
-      <h1 className="text-3xl font-bold mb-4 text-purple-400">Ask SkillForge AI 🤖</h1>
+    <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center p-6">
+      <h1 className="text-3xl font-bold mb-4 text-purple-400">Ask Gemini 🤖</h1>
 
-      <div className="bg-gray-800 rounded-lg p-4 h-96 overflow-y-auto mb-4">
-        {messages.map((msg, idx) => (
-          <div
-            key={idx}
-            className={`mb-2 p-2 rounded ${
-              msg.sender === 'user' ? 'bg-purple-700 text-right' : 'bg-gray-700 text-left'
-            }`}
-          >
-            {msg.text}
-          </div>
-        ))}
-      </div>
+      <textarea
+        className="w-full max-w-xl bg-gray-800 text-white p-4 rounded-lg mb-4 border border-purple-500 focus:outline-none"
+        rows="4"
+        placeholder="Ask anything about projects, tech, jobs, etc..."
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+      ></textarea>
 
-      <div className="flex gap-2">
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Ask anything..."
-          className="flex-1 px-4 py-2 rounded bg-gray-700 text-white focus:outline-none"
-        />
-        <button
-          onClick={askBot}
-          className="bg-purple-600 px-4 py-2 rounded hover:bg-purple-800"
-        >
-          Ask
-        </button>
-      </div>
+      <button
+        onClick={handleAsk}
+        disabled={loading}
+        className="bg-purple-600 hover:bg-purple-800 px-6 py-2 rounded-lg font-semibold transition duration-300"
+      >
+        {loading ? 'Thinking...' : 'Ask Gemini'}
+      </button>
+
+      {answer && (
+        <div className="mt-6 w-full max-w-xl bg-gray-800 p-4 rounded-lg border border-purple-500">
+          <h2 className="font-bold text-purple-300 mb-2">Answer:</h2>
+          <p className="whitespace-pre-line text-gray-200">{answer}</p>
+        </div>
+      )}
     </div>
   );
 };
