@@ -12,7 +12,7 @@ const AskAI = () => {
     setMessages((prev) => [...prev, userMsg]);
 
     try {
-      const res = await fetch('https://your-backend.onrender.com/api/chatbot/ask', {
+      const res = await fetch('https://skillforge-x-1.onrender.com/api/chatbot/ask', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
