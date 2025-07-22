@@ -3,7 +3,7 @@ const Project = require('../models/Project');
 const Application = require('../models/Application');
 const JoinRequest = require('../models/JoinRequest');
 
-// POST a new Job
+// ✅ POST a new Job
 exports.postJob = async (req, res) => {
   try {
     const { title, description, requiredSkills, company, isStartup } = req.body;
@@ -22,7 +22,7 @@ exports.postJob = async (req, res) => {
   }
 };
 
-// POST a new Project
+// ✅ POST a new Project
 exports.postProject = async (req, res) => {
   try {
     const { title, description, techStack, deadline } = req.body;
@@ -40,20 +40,26 @@ exports.postProject = async (req, res) => {
   }
 };
 
-// GET all Job Applicants for Admin
+// ✅ GET all Job Applicants
 exports.getJobApplicants = async (req, res) => {
   try {
-    const applications = await Application.find().populate('jobId userId', 'title name email');
+    const applications = await Application.find()
+      .populate('job', 'title')
+      .populate('user', 'name email');
+
     res.status(200).json(applications);
   } catch (err) {
     res.status(500).json({ msg: 'Failed to fetch job applicants' });
   }
 };
 
-// GET all Project Join Requests for Admin
+// ✅ GET all Project Join Requests
 exports.getProjectRequests = async (req, res) => {
   try {
-    const requests = await JoinRequest.find().populate('projectId userId', 'title name email');
+    const requests = await JoinRequest.find()
+      .populate('project', 'title')
+      .populate('user', 'name email');
+
     res.status(200).json(requests);
   } catch (err) {
     res.status(500).json({ msg: 'Failed to fetch project join requests' });
