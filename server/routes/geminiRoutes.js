@@ -14,8 +14,8 @@ router.post('/ask', async (req, res) => {
 
     res.status(200).json({ response: text });
   } catch (err) {
-    console.error('Gemini error:', err.message);
-    res.status(500).json({ error: 'Gemini failed' });
+    console.error('Gemini Error:', err.message);
+    res.status(500).json({ error: 'Gemini API failed' });
   }
 });
 
