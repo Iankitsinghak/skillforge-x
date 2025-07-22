@@ -1,45 +1,70 @@
-import { useState } from 'react';
-import { askGemini } from '../api/ask';
+// src/pages/AskAI.jsx
+import React, { useState } from 'react';
 
 const AskAI = () => {
-  const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const askBot = async () => {
     if (!input.trim()) return;
 
-    const userMessage = { sender: 'You', text: input };
-    setMessages((prev) => [...prev, userMessage]);
+    const userMsg = { sender: 'user', text: input };
+    setMessages((prev) => [...prev, userMsg]);
 
-    const res = await askGemini(input);
-    const botMessage = { sender: 'Gemini', text: res.answer || 'No response' };
-    setMessages((prev) => [...prev, botMessage]);
+    try {
+      const res = await fetch('https://your-backend.onrender.com/api/chatbot/ask', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prompt: input }),
+      });
+
+      const data = await res.json();
+      const botMsg = { sender: 'bot', text: data.response || 'No response' };
+      setMessages((prev) => [...prev, botMsg]);
+    } catch (err) {
+      setMessages((prev) => [
+        ...prev,
+        { sender: 'bot', text: 'Something went wrong with Gemini 🤖' },
+      ]);
+    }
+
     setInput('');
   };
 
   return (
-    <div className="min-h-screen bg-black text-white p-6">
-      <h2 className="text-3xl font-bold mb-6">🤖 Ask Gemini</h2>
+    <div className="min-h-screen bg-gray-900 text-white p-6">
+      <h1 className="text-3xl font-bold mb-4 text-purple-400">Ask SkillForge AI 🤖</h1>
 
-      <div className="bg-gray-900 rounded-lg p-4 mb-4 max-h-[60vh] overflow-y-auto space-y-4">
-        {messages.map((msg, i) => (
-          <div key={i} className={`text-sm ${msg.sender === 'You' ? 'text-right' : 'text-left'}`}>
-            <span className="font-bold text-purple-400">{msg.sender}:</span> {msg.text}
+      <div className="bg-gray-800 rounded-lg p-4 h-96 overflow-y-auto mb-4">
+        {messages.map((msg, idx) => (
+          <div
+            key={idx}
+            className={`mb-2 p-2 rounded ${
+              msg.sender === 'user' ? 'bg-purple-700 text-right' : 'bg-gray-700 text-left'
+            }`}
+          >
+            {msg.text}
           </div>
         ))}
       </div>
 
-      <form onSubmit={handleSubmit} className="flex gap-2">
+      <div className="flex gap-2">
         <input
           type="text"
-          className="flex-grow p-2 bg-gray-800 rounded"
-          placeholder="Ask anything..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          placeholder="Ask anything..."
+          className="flex-1 px-4 py-2 rounded bg-gray-700 text-white focus:outline-none"
         />
-        <button type="submit" className="bg-purple-600 px-4 py-2 rounded">Send</button>
-      </form>
+        <button
+          onClick={askBot}
+          className="bg-purple-600 px-4 py-2 rounded hover:bg-purple-800"
+        >
+          Ask
+        </button>
+      </div>
     </div>
   );
 };
