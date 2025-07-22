@@ -9,8 +9,7 @@ exports.askGemini = async (req, res) => {
     const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
 
     const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
+    const text = result.response.text();
 
     res.status(200).json({ answer: text });
   } catch (err) {
