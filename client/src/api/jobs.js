@@ -15,3 +15,7 @@ export const getStartupJobs = async () => {
   });
   return res.json();
 };
+export const getAllJobs = async () => {
+  const res = await fetch(`${API}/api/jobs`);
+  return res.json();
+};
