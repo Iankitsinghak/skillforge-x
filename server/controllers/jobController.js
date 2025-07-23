@@ -16,7 +16,7 @@ exports.getMatchedJobs = async (req, res) => {
     console.log("🧠 User Skills:", user.skills);
 
     const matched = await Job.find({
-      requiredSkills: { $in: user.skills }
+      skillsRequired: { $in: user.skills }
     });
 
     console.log("🎯 Matched Jobs:", matched);
@@ -26,6 +26,7 @@ exports.getMatchedJobs = async (req, res) => {
     res.status(500).json({ msg: 'Failed to fetch jobs' });
   }
 };
+
 
 
 // ✅ Get Only Startup Jobs
