@@ -24,6 +24,28 @@ exports.postChallenge = async (req, res) => {
   }
 };
 
+// ✅ POST a new Job
+exports.postJob = async (req, res) => {
+  try {
+    const { title, description, skillsRequired, salary, location, company } = req.body;
+
+    const job = await Job.create({
+      title,
+      description,
+      skillsRequired,
+      salary,
+      location,
+      company,
+      postedBy: req.user.id
+    });
+
+    res.status(201).json({ msg: 'Job posted successfully', job });
+  } catch (err) {
+    console.error('Job Post Error:', err.message);
+    res.status(500).json({ msg: 'Failed to post job' });
+  }
+};
+
 // ✅ POST a new Project
 exports.postProject = async (req, res) => {
   try {
