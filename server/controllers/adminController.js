@@ -4,23 +4,23 @@ const Application = require('../models/Application');
 const JoinRequest = require('../models/JoinRequest');
 const Challenge = require('../models/Challenge');
 
-// ✅ POST a new Challenge
-exports.postChallenge = async (req, res) => {
+// ✅ POST a new Job
+exports.postJob = async (req, res) => {
   try {
-    const { title, description, difficulty, tags } = req.body;
+    const { title, description, skillsRequired, salary } = req.body;
 
-    const challenge = await Challenge.create({
+    const job = await Job.create({
       title,
       description,
-      difficulty,
-      tags,
+      skillsRequired,
+      salary,
       postedBy: req.user.id,
     });
 
-    res.status(201).json({ msg: 'Challenge posted successfully', challenge });
+    res.status(201).json({ msg: 'Job posted successfully', job });
   } catch (err) {
-    console.error('Challenge Post Error:', err.message);
-    res.status(500).json({ msg: 'Failed to post challenge' });
+    console.error('Job Post Error:', err.message);
+    res.status(500).json({ msg: 'Failed to post job' });
   }
 };
 
