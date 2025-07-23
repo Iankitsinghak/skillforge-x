@@ -2,18 +2,31 @@ const Job = require('../models/Job');
 const User = require('../models/User');
 const Application = require('../models/Application');
 
-// ✅ Get Jobs Matching User Skills
 exports.getMatchedJobs = async (req, res) => {
   try {
+    console.log("🔥 /match route hit");
+
     const user = await User.findById(req.user.id);
+    if (!user) {
+      console.log("❌ User not found");
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    console.log("👤 User ID:", req.user.id);
+    console.log("🧠 User Skills:", user.skills);
+
     const matched = await Job.find({
       requiredSkills: { $in: user.skills }
     });
+
+    console.log("🎯 Matched Jobs:", matched);
     res.json(matched);
   } catch (err) {
+    console.error("❌ Error in getMatchedJobs:", err.message);
     res.status(500).json({ msg: 'Failed to fetch jobs' });
   }
 };
+
 
 // ✅ Get Only Startup Jobs
 exports.getStartupJobs = async (req, res) => {
