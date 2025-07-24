@@ -13,16 +13,20 @@ exports.getMatchedJobs = async (req, res) => {
     }
 
     const userSkills = user.skills.map(s => s.trim().toLowerCase());
+    console.log("🧠 Normalized User Skills:", userSkills);
 
-    console.log("👤 User ID:", req.user.id);
-    console.log("🧠 Processed User Skills:", userSkills);
+    const jobs = await Job.find();
+    console.log("📦 Total Jobs in DB:", jobs.length);
+    jobs.forEach(j => {
+      console.log(`➡️ ${j.title}:`, j.requiredSkills);
+    });
 
     const matched = await Job.find({
       requiredSkills: { $in: userSkills }
     });
 
-    console.log("🎯 Matched Jobs:", matched.length);
-    matched.forEach(job => console.log("✅", job.title));
+    console.log("🎯 Matched Jobs Count:", matched.length);
+    matched.forEach(j => console.log("✅", j.title));
 
     res.json(matched);
   } catch (err) {
@@ -30,7 +34,6 @@ exports.getMatchedJobs = async (req, res) => {
     res.status(500).json({ msg: 'Failed to fetch jobs' });
   }
 };
-
 
 // ✅ Get Only Startup Jobs
 exports.getStartupJobs = async (req, res) => {
