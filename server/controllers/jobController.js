@@ -12,21 +12,24 @@ exports.getMatchedJobs = async (req, res) => {
       return res.status(404).json({ msg: 'User not found' });
     }
 
+    const userSkills = user.skills.map(s => s.trim().toLowerCase());
+
     console.log("👤 User ID:", req.user.id);
-    console.log("🧠 User Skills:", user.skills);
+    console.log("🧠 Processed User Skills:", userSkills);
 
     const matched = await Job.find({
-      skillsRequired: { $in: user.skills }
+      requiredSkills: { $in: userSkills }
     });
 
-    console.log("🎯 Matched Jobs:", matched);
+    console.log("🎯 Matched Jobs:", matched.length);
+    matched.forEach(job => console.log("✅", job.title));
+
     res.json(matched);
   } catch (err) {
     console.error("❌ Error in getMatchedJobs:", err.message);
     res.status(500).json({ msg: 'Failed to fetch jobs' });
   }
 };
-
 
 
 // ✅ Get Only Startup Jobs
